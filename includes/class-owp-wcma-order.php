@@ -32,6 +32,11 @@ if(!class_exists('OWP_WCMA_Order')) {
             $this->advertiser_id = $advertiser_id;
             $this->commission_rate = $commission_rate;
 
+            // 新增：從外掛設定讀取 Token 資訊  //nitawu
+            $this->network_id    = OctopusWP_WC_Mei_An::get_setting('network_id');
+            $this->network_token = OctopusWP_WC_Mei_An::get_setting('network_token');
+            $this->affiliate_id   = OctopusWP_WC_Mei_An::get_setting('affiliate_id');
+
             $total = 0;
             foreach ($this->order->get_items() as $item) {
                 /** @var WC_Order_Item_Product $item */
@@ -58,12 +63,12 @@ if(!class_exists('OWP_WCMA_Order')) {
                 'Method'                 => 'create',
                 'Service'                => 'HasOffers',
                 'Version'                => '2',
-                'NetworkId'              => 'marktamerica',
-                'NetworkToken'           => 'NETPYKNAYOswzsboApxaL6GPQRiY2s',
+                'NetworkId'              => $this->network_id,    // 替換原 'marktamerica'  nitawu
+                'NetworkToken'           => $this->network_token, // 替換原 'NETPYKNAYO...'  nitawu
                 'data[offer_id]'         => $this->offer_id,
                 'data[advertiser_id]'    => $this->advertiser_id,
                 'data[sale_amount]'      => $this->amount,
-                'data[affiliate_id]'     => 12,
+                'data[affiliate_id]'     => $this->affiliate_id,  // 替換原 12 nitawu
                 'data[payout]'           => $this->commission_amount,
                 'data[revenue]'          => $this->commission_amount,
                 'data[advertiser_info]'  => $this->get_order_id(),
@@ -81,12 +86,12 @@ if(!class_exists('OWP_WCMA_Order')) {
                 'Method'                 => 'create',
                 'Service'                => 'HasOffers',
                 'Version'                => '2',
-                'NetworkId'              => 'marktamerica',
-                'NetworkToken'           => 'NETPYKNAYOswzsboApxaL6GPQRiY2s',
+                'NetworkId'              => $this->network_id,    // 替換原 'marktamerica'
+                'NetworkToken'           => $this->network_token, // 替換原 'NETPYKNAYO...'  nitawu
                 'data[offer_id]'         => $this->offer_id,
                 'data[advertiser_id]'    => $this->advertiser_id,
                 'data[sale_amount]'      => -1 * $this->amount,
-                'data[affiliate_id]'     => 12,
+                'data[affiliate_id]'     => $this->affiliate_id,  // 替換原 12 nitawu
                 'data[payout]'           => -1 * $this->commission_amount,
                 'data[revenue]'          => -1 * $this->commission_amount,
                 'data[advertiser_info]'  => $this->get_order_id(),

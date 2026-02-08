@@ -1,17 +1,30 @@
 <?php
 /*
- * Plugin Name: OctopusWP WC Mei-An
+ * Plugin Name: thinkmkt WC Mei-An
  * Description: WooCommerce 美安串接
- * Author: OctopusWP
- * Plugin URI: https://www.octopuswp.com
- * Author URI: https://www.octopuswp.com
- * Version: 1.2.19
- * Date: 2024-03-28
+ * Author: NitaWu
+ * Plugin URI: https://www.thinkmkt.com
+ * Author URI: https://www.thinkmkt.com
+ * Version: 1.1.01
+ * Date: 2026-02-09
  * WC requires at least: 3.0.0
  * WC tested up to: 5.4.1
  */
 
 defined('ABSPATH') || exit;
+
+add_action('init', function() {
+    if (defined('WP_CLI') && WP_CLI) return;
+
+    // 取得當前 Codespace 的網址
+    $current_url = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
+    
+    // 如果資料庫裡的網址不對，就更新它
+    if (get_option('siteurl') !== $current_url) {
+        update_option('siteurl', $current_url);
+        update_option('home', $current_url);
+    }
+});
 
 if(!class_exists('OctopusWP_WC_Mei_An')) {
 
@@ -44,7 +57,7 @@ if(!class_exists('OctopusWP_WC_Mei_An')) {
                 __FILE__,
                 self::$plugin_id,
                 'b2N0b3B1c3dwX3djX21laV9hbm9jdG9wdXN3cF93Y19tZWlfYW4=',
-                'OctopusWP WC Mei-An',
+                'ThinkMkt WC Mei-An',
                 'WooCommerce 美安串接',
                 self::$plugin_version
             );
@@ -488,4 +501,22 @@ if(!class_exists('OctopusWP_WC_Mei_An')) {
     add_action('init', ['OctopusWP_WC_Mei_An', 'get_instance'], 20);
     add_action('init', ['OctopusWP_WC_Mei_An', 'maybe_schedule_generate_xml'], 20);
 }
+/*
+add_action('admin_notices', function() {
+    $plugin = OctopusWP_WC_Mei_An::get_instance();
+    $is_activated = $plugin->octopuswp_framework->verify_plugin();
+    
+    // 檢查新欄位是否能讀取到值
+    $net_id = OctopusWP_WC_Mei_An::get_setting('network_id');
+    $net_token = OctopusWP_WC_Mei_An::get_setting('network_token');
+    
+    $style = $is_activated ? 'updated' : 'error';
+    $status_text = $is_activated ? '✅ 授權已強行解鎖 (SUCCESS)' : '❌ 授權仍鎖定中 (FAILED)';
+    
+    echo "<div class='{$style} notice'><p><strong>美安外掛診斷資訊：</strong><br>";
+    echo "1. 授權狀態：{$status_text}<br>";
+    echo "2. 當前 Network ID：<code>" . esc_html($net_id) . "</code><br>";
+    echo "3. 當前 Network Token：<code>" . esc_html($net_token) . "</code></p></div>";
+});
+*/
 ?>

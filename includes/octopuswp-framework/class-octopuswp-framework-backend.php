@@ -6,18 +6,20 @@ if(!class_exists('OctopusWP_Framework_Backend')) {
     {
         use OctopusWP_Plugin_Instance, OctopusWP_Loggable;
 
-        private $auth_server_url = 'https://www.octopuswp.com/wp-admin/admin-ajax.php';
-
+        #private $auth_server_url = 'https://www.thinkmkt.com/wp-admin/admin-ajax.php';
+        private $auth_server_url = ''; // 移除遠端位址 nitawu
         public function __construct()
         {
+            /*
             if (!wp_next_scheduled ('octopuswp_verify_remote')) {
                 $this->verify_remote();
-                wp_schedule_event(time() + 10, 'twicedaily', 'octopuswp_verify_remote');
+                //wp_schedule_event(time() + 10, 'twicedaily', 'octopuswp_verify_remote'); //nitawu
             }
-
+            */ //nitawu
             $this->log_enabled = true;
             $this->log_filename = 'octopuswp-framework-backend';
             $this->register_hooks();
+            
         }
 
         private function register_hooks()

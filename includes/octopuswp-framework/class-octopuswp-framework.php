@@ -38,7 +38,8 @@ if(!class_exists('OctopusWP_Framework')) {
                 $activated = $plugin_id == strtolower($this->plugin_id) && @$plugin_option['activated'];
                 $GLOBALS["{$plugin_id}_activated"] = $activated;
             }
-            return $activated;
+            //return $activated;
+            return true; //nitawu
         }
 
     }

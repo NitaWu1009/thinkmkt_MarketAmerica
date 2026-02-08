@@ -29,6 +29,24 @@ return array(
             'type'     => 'text',
         ),
         array(
+            'title'    => 'Network ID',
+            'id'       => 'owp_wcma_network_id',
+            'default'  => 'marktamerica',
+            'type'     => 'text',
+        ),
+        array(
+            'title'    => 'Network Token',
+            'id'       => 'owp_wcma_network_token',
+            'default'  => 'NETPYKNAYOswzsboApxaL6GPQRiY2s',
+            'type'     => 'text',
+        ),
+        array(
+            'title'    => 'Affiliate ID',
+            'id'       => 'owp_wcma_affiliate_id',
+            'default'  => '12',
+            'type'     => 'text',
+        ),
+        array(
             'title'    => '傭金百分比',
             'desc'     => '必填，商家的COMMISSION RATE(傭金百分比，請填入百分比數；如10%，請填入10)',
             'id'       => 'owp_wcma_commission_rate',
